@@ -10,7 +10,12 @@ Read the manual page for a unix command with man or woman. What command did you 
 * '.to_i' ==> Returns the result of interpreting leading characters in str as an integer (Default is base 10). If there is not a valid number at the start of str, 0 is returned.
 
  ...and vice versa. 
+* '.id2name' ==> Returns the name or string corresponding to sym.
+* e.g., :ihearttacos.id2name   #=> "ihearttacos" (returns a string)
+
+* '.to_proc' ==> Returns a Proc object which respond to the given method by sym.  (I have no idea what this means, but i's an undefined method for a string.)
 
 
- Pick a method defined on the Enumerable class (arrays, etc). What does it do and when might you use it?
-
+Pick a method defined on the Enumerable class (arrays, etc). What does it do and when might you use it?
+* '.map' -- Used with { |obj| block } ==> Returns a new array with the results of running block once for every element in the array.
+* e.g., [1,2,3,4].map {|foo| foo*foo*foo}  #=> [1, 8, 27, 64]
