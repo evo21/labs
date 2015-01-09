@@ -1,6 +1,4 @@
-## BEWARE THE SEMICOLON!
-
-require 'pry'
+## CLASSIC HANGMAN
 require 'set'
 
 words = ['angus',
@@ -9,6 +7,8 @@ words = ['angus',
          'chocolate',
          'gangster',
          'unfortunate',
+         'Fargo',
+         'ASCII',
          'drippings',
          'dictator',
          'capitalist',
@@ -33,7 +33,7 @@ def game_status(answer, guesses)
   letters = answer.split("")
   letters.each do |c|
     if guesses.include?(c) # has been guessed
-      print c.upcase 
+      print c
     else # not guessed
       print '_'
     end
@@ -50,7 +50,7 @@ end
 
 def prompt_player
   print "Guess a letter in my Word ==> "
-  newguess = $stdin.gets.chomp
+  newguess = $stdin.gets.downcase.chomp
   return newguess
   # TODO: get user input / show some status
 end
@@ -63,7 +63,7 @@ def hangman(wordlist)
   guessed = Set.new
   # creates a new Set called guessed {}
   
-  answer = wordlist.sample(1)[0]
+  answer = wordlist.sample(1)[0].downcase
   # answer is string, randomly pulled from words array
   # the zero references the first element in the random sample array
   
@@ -83,7 +83,8 @@ def hangman(wordlist)
   end
   
   if guessed_it?(answer, guessed)
-    puts "You win!! My Word was: #{answer.upcase}"
+    puts answer
+    puts " You win!! My Word was: #{answer.upcase}"
     puts "You have saved the HANGMAN!"
   else
     game_over(answer) # TODO: Do I need an argument?
