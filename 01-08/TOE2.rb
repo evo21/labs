@@ -8,10 +8,13 @@ def new_board
          "g"=>".","h"=>" ","i"=>" "}
 end
 
+def new_open_spots
+  return ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+end
+
 board = new_board()
 
-win = [["a","d","g"],["b","e","h"],["c","f","i"]]
-
+open_spots = new_open_spots()
 
 def show_board(board)
 print board_status = """
@@ -28,10 +31,18 @@ print board_status = """
   """
 end
 
-def move
-  print "Where you do want to play? ==>  "
-  a_move = gets.chomp.downcase
-  return a_move
+def move(open_spots)
+  loop do
+    print "\n  Where you do want to play? ==>  "
+    a_move = gets.chomp.downcase
+
+    if !open_spots.include?(a_move)
+      puts "***   That move is not allowed!   ***"
+    else 
+      return a_move
+      break
+    end
+  end
 end
 
 def x_turn?(turn_number)
@@ -92,7 +103,7 @@ end
 
 # main 
 
-def tictactoe(board)
+def tictactoe(board, open_spots)
 
   turn_count = 9
 
@@ -100,14 +111,16 @@ def tictactoe(board)
     system("clear")
     show_board(board)
 
-    next_move = move()
+    next_move = move(open_spots)
 
       if x_turn?(turn_count)
         mark_board_x(board, next_move)
       else
         mark_board_o(board, next_move)
       end
-    
+
+    open_spots.delete("#{next_move}")
+
     system("clear")
     show_board(board)
 
@@ -128,9 +141,10 @@ def tictactoe(board)
 
 end
 
-tictactoe(board)
+tictactoe(board, open_spots)
 
 while play_again?
-  board = new_board()
-  tictactoe (board)
+  board = new_board()  #resets the board hash with "empty" new board hash
+  open_spots = new_open_spots() #resets available play spots Array w all spots avail.
+  tictactoe(board, open_spots)
 end
