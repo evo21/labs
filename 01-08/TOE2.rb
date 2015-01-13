@@ -14,6 +14,16 @@ board = new_board()
 
 open_spots = new_open_spots()
 
+def comp_player?
+  print 'Choose 1P game: (1) or 2P game: (2) ==> '
+  game_choice = gets.chomp
+  until game_choice =~ /[1-2]/
+    print 'Choose (1) for 1P, or (2) for 2P game.'
+    game_choice = gets.chomp
+  end
+  game_choice == "1" ? true : false
+end
+
 def show_board(board)
 print board_status = """
   
@@ -38,7 +48,6 @@ def move(open_spots)
     print "\n  Where you do want to play? ==>  "
     a_move = gets.chomp.downcase     
   end
-  
   a_move
 end
 
@@ -56,6 +65,10 @@ end
 
 def mark_board_o(board, o_move)
     board["#{o_move}"] = 'O'
+end
+
+def comp_mark_board_o(board, open_spots)
+    board["#{open_spots.sample}"] = 'O'
 end
 
 def horizon_win?(board)
@@ -81,7 +94,6 @@ end
 def diagonal_win?(board)
   if (board["a"] == board["e"]) && (board["a"] == board["i"]) ||
      (board["g"] == board["e"]) && (board["g"] == board["c"])
-
    return true
   else
     return false
@@ -104,17 +116,26 @@ def tictactoe(board, open_spots)
 
   turn_count = 9
 
+  single_player = comp_player?
+
   while (turn_count != 0) do
     system("clear")
     show_board(board)
 
-    next_move = move(open_spots)
+    if x_turn?(turn_count)
+      next_move = move(open_spots)
+    elsif single_player
+      next_move = open_spots.sample
+    else next_move = move(open_spots)
+    end
 
-      if x_turn?(turn_count)
-        mark_board_x(board, next_move)
-      else
-        mark_board_o(board, next_move)
-      end
+    if x_turn?(turn_count)
+      mark_board_x(board, next_move)
+    elsif single_player
+      mark_board_o(board, next_move)
+    else
+      mark_board_o(board, next_move)
+    end
 
     open_spots.delete("#{next_move}")
 
@@ -126,16 +147,13 @@ def tictactoe(board, open_spots)
     if (diagonal_win?(board) || horizon_win?(board) || vertical_win?(board))
       break
     end
-  
   end
   
   if (diagonal_win?(board) || horizon_win?(board) || vertical_win?(board))
     print "   We have a winner!\n"
-
   else 
     print "   The CAT has the game!\n"
   end
-
 end
 
 tictactoe(board, open_spots)
