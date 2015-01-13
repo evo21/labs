@@ -1,15 +1,13 @@
-=begin
-=end
-require 'pry'
+## CLASSIC Tic-Tac-Toe
 
 def new_board 
-  return {
-  "a"=>" ", "b"=> " ", "c"=> ".", "d"=>" ", "e"=>"_", "f"=> " ",
-         "g"=>".","h"=>" ","i"=>" "}
+  return {"a"=>" ", "b"=> " ", "c"=> ".", "d"=>" ", "e"=>"_", "f"=> " ",
+          "g"=>".","h"=>" ","i"=>" "
+  }
 end
 
 def new_open_spots
-  return ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+  ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 end
 
 board = new_board()
@@ -32,17 +30,16 @@ print board_status = """
 end
 
 def move(open_spots)
-  loop do
-    print "\n  Where you do want to play? ==>  "
-    a_move = gets.chomp.downcase
+  print "\n  Where you do want to play? ==>  "
+  a_move = gets.chomp.downcase
 
-    if !open_spots.include?(a_move)
-      puts "***   That move is not allowed!   ***"
-    else 
-      return a_move
-      break
-    end
+  until open_spots.include?(a_move)
+    puts "***   That move is not allowed!   ***" 
+    print "\n  Where you do want to play? ==>  "
+    a_move = gets.chomp.downcase     
   end
+  
+  a_move
 end
 
 def x_turn?(turn_number)
@@ -66,7 +63,7 @@ def horizon_win?(board)
      (board["d"] == board["e"]) && (board["d"] == board["f"]) ||
      (board["g"] == board["h"]) && (board["g"] == board["i"])
    return true
- else
+  else
     return false
   end
 end
@@ -76,7 +73,7 @@ def vertical_win?(board)
      (board["b"] == board["e"]) && (board["b"] == board["h"]) ||
      (board["c"] == board["f"]) && (board["c"] == board["i"])
    return true
- else
+  else
     return false
   end
 end
@@ -86,7 +83,7 @@ def diagonal_win?(board)
      (board["g"] == board["e"]) && (board["g"] == board["c"])
 
    return true
- else
+  else
     return false
   end
 end
