@@ -1,8 +1,7 @@
-require 'set'
-require 'pry'
 ## Classic Hangman.  You may supply the default number of turns by including
 ## it in the command line passed to the Ruby program, ie. 'ruby hangman 11'
 
+require 'set'
 
 words = %w(angus beefsteak tomato chocolate gangster unfortunate events
            Fargo conservative ASCII drippings dictator capitalist opportunist)
@@ -101,8 +100,6 @@ while play_again = 'y' do
     break
   end
 end
-
-
 
 
 
